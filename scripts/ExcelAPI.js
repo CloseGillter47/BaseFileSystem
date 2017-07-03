@@ -2,6 +2,11 @@ const XLSX = require('node-xlsx');
 
 const FS = require('fs');
 
+/**
+ * 读取xlsx文件
+ * @param {string} str_file_name - 读取的文件全路径
+ * @returns {promise} 返回操作的Promise结果
+ */
 function read(str_file_name) {
 
     return new Promise((resolve, reject) => {
@@ -27,6 +32,13 @@ function read(str_file_name) {
 
 }
 
+/**
+ * 写入xlsx 文件
+ * @param {string} str_file_name 写入的文件全路径
+ * @param {array} list_data - 要写入的数据
+ * @param {array} [list_sheet] - 需要单独设置sheet名的集合，默认是sheet1、sheet2...
+ * @returns {promise} 返回操作的Promise结果
+ */
 function write(str_file_name, list_data, list_sheet) {
 
     return new Promise((resolve, reject) => {
@@ -54,7 +66,6 @@ function write(str_file_name, list_data, list_sheet) {
             let buffer = XLSX.build(res);
 
             FS.writeFileSync(str_file_name, buffer);
-
 
         } catch (error) {
 
