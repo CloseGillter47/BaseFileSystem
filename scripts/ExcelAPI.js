@@ -11,9 +11,9 @@ function read(str_file_name) {
 
     return new Promise((resolve, reject) => {
 
-        if (!str_file_name) { reject({ success: false, status: 10001, data: null, message: '缺少参数' }); return; }
+        if (!str_file_name) { reject({ success: false, status: 101, data: null, message: '缺少参数' }); return; }
 
-        if (typeof str_file_name !== 'string') { reject({ success: false, status: 10002, data: null, message: '参数格式不正确，无法解析' }); return; }
+        if (typeof str_file_name !== 'string') { reject({ success: false, status: 102, data: null, message: '参数格式不正确，无法解析' }); return; }
 
         let res = '';
 
@@ -23,10 +23,10 @@ function read(str_file_name) {
 
         } catch (error) {
 
-            reject({ success: false, status: 30001, data: null, message: error }); return;
+            reject({ success: false, status: 301, data: null, message: error }); return;
         }
 
-        resolve({ success: true, status: 10001, data: res, message: 'xlsx文件解析完毕' });
+        resolve({ success: true, status: 200, data: res, message: 'xlsx文件解析完毕' });
 
     })
 
@@ -43,13 +43,13 @@ function write(str_file_name, list_data, list_sheet) {
 
     return new Promise((resolve, reject) => {
 
-        if (!str_file_name || !list_data) { reject({ success: false, status: 10001, data: null, message: '缺少参数' }); return; }
+        if (!str_file_name || !list_data) { reject({ success: false, status: 101, data: null, message: '缺少参数' }); return; }
 
-        if (typeof str_file_name !== 'string') { reject({ success: false, status: 10002, data: null, message: '参数格式不正确，无法解析' }); return; }
+        if (typeof str_file_name !== 'string') { reject({ success: false, status: 102, data: null, message: '参数格式不正确，无法解析' }); return; }
 
-        if (Object.prototype.toString.call(list_data) !== '[object Array]') { reject({ success: false, status: 10002, data: null, message: '参数格式错误' }); return; }
+        if (Object.prototype.toString.call(list_data) !== '[object Array]') { reject({ success: false, status: 102, data: null, message: '参数格式错误' }); return; }
 
-        if (!!list_sheet && Object.prototype.toString.call(list_sheet) !== '[object Array]') { reject({ success: false, status: 10002, data: null, message: '参数格式错误' }); return; }
+        if (!!list_sheet && Object.prototype.toString.call(list_sheet) !== '[object Array]') { reject({ success: false, status: 102, data: null, message: '参数格式错误' }); return; }
 
         let res = [];
 
@@ -65,15 +65,15 @@ function write(str_file_name, list_data, list_sheet) {
 
             let buffer = XLSX.build(res);
 
-            FS.writeFileSync(str_file_name, buffer);
+            FS.writeFileSync(str_file_name, buffer, { 'flag': 'w' });
 
         } catch (error) {
 
-            reject({ success: false, status: 30001, data: null, message: error }); return;
+            reject({ success: false, status: 301, data: null, message: error }); return;
 
         }
 
-        resolve({ success: true, status: 10001, data: res, message: 'xlsx文件解析完毕' });
+        resolve({ success: true, status: 200, data: res, message: 'xlsx文件解析完毕' });
 
     })
 }
