@@ -5,30 +5,30 @@ const FS = require('fs');
 /**
  * 读取xlsx文件
  * @param {string} str_file_name - 读取的文件全路径
- * @returns {promise} 返回操作的Promise结果
+ * @returns {object} 返回读取的内容
  */
 function read(str_file_name) {
 
-    return new Promise((resolve, reject) => {
+    if (!str_file_name || typeof str_file_name !== 'string') { console.log('参数必须为字符串，不能为空或其他'); return null; }
 
-        if (!str_file_name) { reject({ success: false, status: 101, data: null, message: '缺少参数' }); return; }
+    let res;
 
-        if (typeof str_file_name !== 'string') { reject({ success: false, status: 102, data: null, message: '参数格式不正确，无法解析' }); return; }
+    try {
 
-        let res = '';
+        res = XLSX.parse(str_file_name) || '';
 
-        try {
+    } catch (error) {
 
-            res = XLSX.parse(str_file_name) || '';
+        console.log('读取异常');
 
-        } catch (error) {
+        console.log(error);
 
-            reject({ success: false, status: 301, data: null, message: error }); return;
-        }
+        return null;
+    }
 
-        resolve({ success: true, status: 200, data: res, message: 'xlsx文件解析完毕' });
+    console.log('读取完成');
 
-    })
+    return res;
 
 }
 
@@ -37,45 +37,41 @@ function read(str_file_name) {
  * @param {string} str_file_name 写入的文件全路径
  * @param {array} list_data - 要写入的数据
  * @param {array} [list_sheet] - 需要单独设置sheet名的集合，默认是sheet1、sheet2...
- * @returns {promise} 返回操作的Promise结果
+ * @returns {boolean} 返回操作的成功与否
  */
 function write(str_file_name, list_data, list_sheet) {
 
-    return new Promise((resolve, reject) => {
+    if (!str_file_name || typeof str_file_name !== 'string') { console.log('第一个参数必须为字符串，不能为空或其他'); return false; }
 
-        if (!str_file_name || !list_data) { reject({ success: false, status: 101, data: null, message: '缺少参数' }); return; }
+    if (!list_data || Object.prototype.toString.call(list_data) !== '[object Array]') { console.log('第二个参数必须为数组，不能为空或其他'); return false; }
 
-        if (typeof str_file_name !== 'string') { reject({ success: false, status: 102, data: null, message: '参数格式不正确，无法解析' }); return; }
+    if (!list_sheet || Object.prototype.toString.call(list_sheet) !== '[object Array]') { console.log('第三个参数要求为数组'); return false; }
 
-        if (Object.prototype.toString.call(list_data) !== '[object Array]') { reject({ success: false, status: 102, data: null, message: '参数格式错误' }); return; }
+    let res;
 
-        if (!!list_sheet && Object.prototype.toString.call(list_sheet) !== '[object Array]') { reject({ success: false, status: 102, data: null, message: '参数格式错误' }); return; }
-
-        let res = [];
-
-        list_sheet = list_sheet || [];
+    try {
 
         for (let i = 0; i < list_data.length; i++) {
 
-            res.push({ data: list_data[i], name: list_sheet[i] || ('sheet' + i) });
-
+            res.push({ name: list_sheet[i] || ('sheet' + i), data: list_data[i] });
         }
 
-        try {
+        let buffer = XLSX.build(res);
 
-            let buffer = XLSX.build(res);
+        FS.writeFileSync(str_file_name, buffer, { 'flag': 'w' });
 
-            FS.writeFileSync(str_file_name, buffer, { 'flag': 'w' });
+    } catch (error) {
 
-        } catch (error) {
+        console.log('写出异常');
 
-            reject({ success: false, status: 301, data: null, message: error }); return;
+        console.log(error);
 
-        }
+        return false;
+    }
 
-        resolve({ success: true, status: 200, data: res, message: 'xlsx文件解析完毕' });
+    console.log('写出完成');
 
-    })
+    return true;
 }
 
 module.exports = { read, write }
