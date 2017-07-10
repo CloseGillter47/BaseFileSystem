@@ -4,14 +4,18 @@ const FileAPI = require('./scripts/FileAPI')
 const path = require('path');
 
 
-let res = ExcelAPI.read(path.join(__dirname, 'scripts', 'db', 'source', 'test.xlsx'));
+let res;
 
-res.then(success => {
+// /////////////////////////////////////////////////////////////////////////////////////
 
-    let data = success.data;
-    console.log(data[0].data);
+// res = ExcelAPI.read(path.join(__dirname, 'scripts', 'db', 'source', 'test.xlsx'));
 
-}, failed => {
-    console.log('--');
-    console.log(failed);
-});
+// console.log(res);
+
+// /////////////////////////////////////////////////////////////////////////////////////
+
+// /////////////////////////////////////////////////////////////////////////////////////
+
+res = FileAPI.read(path.join(__dirname, 'scripts', 'db', 'source', 'test1.xlsx'));
+
+console.log(res);
