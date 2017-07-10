@@ -47,13 +47,13 @@ function write(str_file_name, list_data, list_sheet) {
 
     if (!list_sheet || Object.prototype.toString.call(list_sheet) !== '[object Array]') { console.log('第三个参数要求为数组'); return false; }
 
-    let res;
+    let res = [];
 
     try {
 
         for (let i = 0; i < list_data.length; i++) {
 
-            res.push({ name: list_sheet[i] || ('sheet' + i), data: list_data[i] });
+            res.push({ name: list_sheet[i] || ('sheet' + (i + 1)), data: list_data[i] });
         }
 
         let buffer = XLSX.build(res);
