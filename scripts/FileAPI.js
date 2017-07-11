@@ -67,6 +67,77 @@ function write(path, data, config) {
 
 }
 
+/**
+ * 工具包
+ */
+const util = {
+
+    buildLongDateString: function (date) {
+
+        date = date || new Date();
+
+        if (typeof date === 'string') date = new Date(date);
+
+        let _time = date.getTime();
+
+        // 北京时间是 +8 小时
+        date.setTime(_time + 8 * 1000 * 60 * 60);
+
+        let _dateStr = date.toJSON();
+
+        return _dateStr.replace(/\D/g, '');
+
+    },
+
+    buildDateString: function (date) {
+
+        date = date || new Date();
+
+        if (typeof date === 'string') date = new Date(date);
+
+        let _time = date.getTime();
+
+        // 北京时间是 +8 小时
+        date.setTime(_time + 8 * 1000 * 60 * 60);
+
+        let _dateStr = date.toJSON();
+
+        return _dateStr.replace(/\D/g, '').substr(0, _dateStr.length - 3);
+    },
+
+    buildSortDateString: function (date) {
+
+        date = date || new Date();
+
+        if (typeof date === 'string') date = new Date(date);
+
+        let _time = date.getTime();
+
+        // 北京时间是 +8 小时
+        date.setTime(_time + 8 * 1000 * 60 * 60);
+
+        let _dateStr = date.toJSON();
+
+        return _dateStr.replace(/\D/g, '').substr(0, 8);
+    },
+
+    buildFilePath: function (args) {
+
+        if (!args || !args.length || typeof args !== 'string') return '';
+
+        return PATH.join(__dirname, ...args);
+    }
+
+};
+
+module.exports.util = util;
+
+module.exports.read = function (path) {
+    read(path);
+};
+
+module.exports.write = function (path, data, config) {
+    write(path, data, config);
+};
 
 
-module.exports = { read, write }
