@@ -44,9 +44,9 @@ module.exports.getDecAse192 = function (str, secret) {
  * @Util 获取系统生成的时间长字符串
  * @args date 可传参数，一个时间对象或者时间字符串
  * @param date [date] 可传参数，一个时间对象或者时间字符串
- * @retrun string 一串数字字符
+ * @retrun string 一串数字字符,含义为YYYYMMDDhhmmssss
  */
-module.exports.getLongSysStr = function (date) {
+module.exports.getLongSystemString = function (date) {
 
     date = date || new Date();
 
@@ -66,9 +66,9 @@ module.exports.getLongSysStr = function (date) {
  * @Util 获取系统生成的时间短字符串
  * @args date 可传参数，一个时间对象或者时间字符串
  * @param date [date] 可传参数，一个时间对象或者时间字符串
- * @retrun string 一串数字字符
+ * @retrun string 一串数字字符,含义为YYYYMMDD
  */
-module.exports.getSortSysStr = function (date) {
+module.exports.getSortSystemString = function (date) {
 
     date = date || new Date();
 
@@ -88,9 +88,9 @@ module.exports.getSortSysStr = function (date) {
  * @Util 获取系统生成的日期字符串
  * @args date 可传参数，一个时间对象或者时间字符串
  * @param date [date] 可传参数，一个时间对象或者时间字符串
- * @retrun string 一串数字字符
+ * @retrun string 一串数字字符，含义为YYYYMMDDhhmm
  */
-module.exports.getDateSysStr = function (date) {
+module.exports.getDateSystemString = function (date) {
 
     date = date || new Date();
 
@@ -103,5 +103,5 @@ module.exports.getDateSysStr = function (date) {
 
     let dateStr = date.toJSON();
 
-    return dateStr.replace(/\D/g, '').substr(0, _dateStr.length - 3);
+    return dateStr.replace(/\D/g, '').substr(0, 12);
 };

@@ -2,6 +2,8 @@ const FS = require('fs')
 
 const PATH = require('path')
 
+const _ = require('lodash')
+
 const EXCEL = require('./ExcelAPI')
 
 
@@ -72,9 +74,24 @@ function write(path, data, config) {
  */
 const util = {
 
-    buildFilePath: function (args) {
+    buildFilePath: function () {
 
-        if (!args || !args.length || typeof args !== 'string') return '';
+        const args = _.values(arguments);
+
+        let errflag = false;
+
+        _.forEach(args, function (o) {
+
+            if (Object.prototype.toString.call(o) !== "[object String]") {
+                errflag = errflag || true;
+            } else {
+                errflag = errflag || false;
+            }
+        });
+
+        if (!args || !args.length) return '';
+
+        if (errflag) throw new Error('参数不全为字符串');
 
         return PATH.join(__dirname, ...args);
     }
@@ -97,11 +114,15 @@ module.exports.write = function (path, data, config) {
  * @args target 可选 将扫描的结果整理到目标文件
  * @retrun object 返回整理好的结果
  */
-module.exports.scanFolder = function (path, target) {
+module.exports.inputFromFolder = function (path, target) {
 
 
 
 };
+
+module.exports.outputToFolder = function (path, target) {
+
+}
 
 /**
  * 从单个xlsx文件中导入数据
@@ -111,7 +132,7 @@ module.exports.inputEXCEL = function () {
 };
 
 /**
- * 将所有json文件导出xlsx文件
+ * 将json文件导出xlsx文件
  */
 module.exports.exportEXCEL = function () {
 

@@ -34,12 +34,34 @@ let res;
 
 // /////////////////////////////////////////////////////////////////////////////////////
 
-res = $t.getEncAse192('admin', 'code');
+// res = $t.getEncAse192('admin', 'code');
+
+// console.log(res);
+
+// res = $t.getDecAse192(res, 'code');
+
+// console.log(res);
+
+// /////////////////////////////////////////////////////////////////////////////////////
+
+// res = $t.getLongSystemString();
+
+// console.log(res);
+
+// res = $t.getDateSystemString();
+
+// console.log(res);
+
+// res = $t.getSortSystemString();
+
+// console.log(res);
+
+// /////////////////////////////////////////////////////////////////////////////////////
+
+// res = FileAPI.util.buildFilePath('F', 'test', 'src', 'img');
+res = FileAPI.util.buildFilePath('s', ['s'], 'r');
 
 console.log(res);
 
-res = $t.getDecAse192(res, 'code');
-
-console.log(res);
 
 // /////////////////////////////////////////////////////////////////////////////////////
