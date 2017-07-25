@@ -72,55 +72,6 @@ function write(path, data, config) {
  */
 const util = {
 
-    buildLongDateString: function (date) {
-
-        date = date || new Date();
-
-        if (typeof date === 'string') date = new Date(date);
-
-        let _time = date.getTime();
-
-        // 北京时间是 +8 小时
-        date.setTime(_time + 8 * 1000 * 60 * 60);
-
-        let _dateStr = date.toJSON();
-
-        return _dateStr.replace(/\D/g, '');
-
-    },
-
-    buildDateString: function (date) {
-
-        date = date || new Date();
-
-        if (typeof date === 'string') date = new Date(date);
-
-        let _time = date.getTime();
-
-        // 北京时间是 +8 小时
-        date.setTime(_time + 8 * 1000 * 60 * 60);
-
-        let _dateStr = date.toJSON();
-
-        return _dateStr.replace(/\D/g, '').substr(0, _dateStr.length - 3);
-    },
-
-    buildSortDateString: function (date) {
-
-        date = date || new Date();
-
-        if (typeof date === 'string') date = new Date(date);
-
-        let _time = date.getTime();
-
-        // 北京时间是 +8 小时
-        date.setTime(_time + 8 * 1000 * 60 * 60);
-
-        let _dateStr = date.toJSON();
-
-        return _dateStr.replace(/\D/g, '').substr(0, 8);
-    },
-
     buildFilePath: function (args) {
 
         if (!args || !args.length || typeof args !== 'string') return '';
@@ -140,4 +91,39 @@ module.exports.write = function (path, data, config) {
     write(path, data, config);
 };
 
+/**
+ * @description 扫描文件夹下面的Excel文件
+ * @args path 文件夹的路径
+ * @args target 可选 将扫描的结果整理到目标文件
+ * @retrun object 返回整理好的结果
+ */
+module.exports.scanFolder = function (path, target) {
 
+
+
+};
+
+/**
+ * 从单个xlsx文件中导入数据
+ */
+module.exports.inputEXCEL = function () {
+
+};
+
+/**
+ * 将所有json文件导出xlsx文件
+ */
+module.exports.exportEXCEL = function () {
+
+};
+
+/**
+ * 
+ */
+module.exports.outputJSON = function () {
+
+};
+
+module.exports.JSONtoEXCEL = function () {
+
+};

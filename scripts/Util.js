@@ -19,7 +19,7 @@ module.exports.getEncAse192 = function (str, secret) {
 
     //返回加密后的字符串
     return enc;
-}
+};
 
 /**
  * @aes192解密模块
@@ -38,4 +38,70 @@ module.exports.getDecAse192 = function (str, secret) {
     dec += decipher.final("utf8");
 
     return dec;
-}
+};
+
+/**
+ * @Util 获取系统生成的时间长字符串
+ * @args date 可传参数，一个时间对象或者时间字符串
+ * @param date [date] 可传参数，一个时间对象或者时间字符串
+ * @retrun string 一串数字字符
+ */
+module.exports.getLongSysStr = function (date) {
+
+    date = date || new Date();
+
+    if (typeof date === 'string') date = new Date(date);
+
+    let time = date.getTime();
+
+    // 北京时间是 +8 小时
+    date.setTime(time + 8 * 1000 * 60 * 60);
+
+    let dateStr = date.toJSON();
+
+    return dateStr.replace(/\D/g, '');
+};
+
+/**
+ * @Util 获取系统生成的时间短字符串
+ * @args date 可传参数，一个时间对象或者时间字符串
+ * @param date [date] 可传参数，一个时间对象或者时间字符串
+ * @retrun string 一串数字字符
+ */
+module.exports.getSortSysStr = function (date) {
+
+    date = date || new Date();
+
+    if (typeof date === 'string') date = new Date(date);
+
+    let time = date.getTime();
+
+    // 北京时间是 +8 小时
+    date.setTime(time + 8 * 1000 * 60 * 60);
+
+    let dateStr = date.toJSON();
+
+    return dateStr.replace(/\D/g, '').substr(0, 8);
+};
+
+/**
+ * @Util 获取系统生成的日期字符串
+ * @args date 可传参数，一个时间对象或者时间字符串
+ * @param date [date] 可传参数，一个时间对象或者时间字符串
+ * @retrun string 一串数字字符
+ */
+module.exports.getDateSysStr = function (date) {
+
+    date = date || new Date();
+
+    if (typeof date === 'string') date = new Date(date);
+
+    let _time = date.getTime();
+
+    // 北京时间是 +8 小时
+    date.setTime(_time + 8 * 1000 * 60 * 60);
+
+    let dateStr = date.toJSON();
+
+    return dateStr.replace(/\D/g, '').substr(0, _dateStr.length - 3);
+};
